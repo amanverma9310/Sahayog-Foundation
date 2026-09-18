@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static sitemap covering fixed routes. Dynamic routes (project/story detail
+  pages) should be generated server-side in Phase 2 from the database, e.g.
+  by an Express route that queries all published projects/stories and
+  streams XML, or a small build-time script that calls the API.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.sahayogfoundation.org/</loc><priority>1.0</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/about</loc><priority>0.8</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/projects</loc><priority>0.9</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/drives</loc><priority>0.7</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/impact</loc><priority>0.7</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/stories</loc><priority>0.8</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/gallery</loc><priority>0.6</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/donate</loc><priority>0.9</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/get-involved/volunteer</loc><priority>0.6</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/get-involved/internship</loc><priority>0.6</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/get-involved/sponsor-a-drive</loc><priority>0.6</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/get-involved/csr-partnership</loc><priority>0.6</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/contact</loc><priority>0.5</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/faq</loc><priority>0.5</priority></url>
+  <url><loc>https://www.sahayogfoundation.org/transparency</loc><priority>0.7</priority></url>
+</urlset>
