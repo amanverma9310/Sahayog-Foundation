@@ -15,42 +15,23 @@ import { sendSuccess } from '../utils/sendResponse.js'
 // acknowledgement email to the submitter, best-effort admin notification.
 // Neither email failing should fail the submission — the record is what
 // matters and it's already saved.
-async function handleFormSubmission({
-  Model,
-  data,
-  formType,
-  notifyTitle,
-  notifyMessage,
-}) {
-  // Save the application first
+async function handleFormSubmission({ Model, data, formType, notifyTitle, notifyMessage }) {
   const doc = await Model.create(data)
 
-  // Run email and notification work in the background.
-  // Do not make the browser wait for SMTP.
-  Promise.allSettled([
-    sendGenericAcknowledgementEmail({
-      to: data.email,
-      name: data.name || data.fullName || data.contactPerson,
-      formType,
-    }),
+  try {
+    await sendGenericAcknowledgementEmail({ to: data.email, name: data.name || data.fullName || data.contactPerson, formType })
+  } catch (err) {
+    console.error(`Failed to send ${formType} acknowledgement email:`, err.message)
+  }
 
-    notifyAdmin({
-      type: formType,
-      title: notifyTitle,
-      message: notifyMessage,
-      relatedId: doc._id,
-      relatedModel: Model.modelName,
-    }),
-  ]).then((results) => {
-    results.forEach((result, index) => {
-      if (result.status === 'rejected') {
-        const task = index === 0 ? 'acknowledgement email' : 'admin notification'
-        console.error(`Failed to process ${task}:`, result.reason?.message)
-      }
-    })
+  await notifyAdmin({
+    type: formType,
+    title: notifyTitle,
+    message: notifyMessage,
+    relatedId: doc._id,
+    relatedModel: Model.modelName,
   })
 
-  // Immediately return the saved application
   return doc
 }
 

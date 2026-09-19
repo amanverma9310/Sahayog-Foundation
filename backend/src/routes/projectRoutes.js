@@ -11,6 +11,7 @@ router.get('/slug/:slug', projectController.getProjectBySlug)
 
 // Admin
 router.use(protectAdmin, restrictTo('Super Admin', 'Project Manager'))
+router.get('/admin/all', projectController.getAllProjectsAdmin)
 router.get('/admin/:id', projectController.getProjectByIdAdmin)
 router.post('/', projectController.createProject)
 router.patch('/:id', projectController.updateProject)

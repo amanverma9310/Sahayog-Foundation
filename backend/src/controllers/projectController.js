@@ -40,6 +40,19 @@ export const getProjectBySlug = catchAsync(async (req, res, next) => {
 
 // ---- Admin ----
 
+export const getAllProjectsAdmin = catchAsync(async (req, res) => {
+  const baseQuery = Project.find()
+  const features = new ApiFeatures(baseQuery, req.query)
+    .filter()
+    .search(['title', 'shortDescription'])
+    .sort()
+    .limitFields()
+    .paginate()
+
+  const [items, total] = await Promise.all([features.query, Project.countDocuments()])
+  sendSuccess(res, 200, items, { total, page: features.pagination.page, limit: features.pagination.limit })
+})
+
 export const getProjectByIdAdmin = catchAsync(async (req, res, next) => {
   const project = await Project.findById(req.params.id)
   if (!project) return next(new AppError('Project not found.', 404))

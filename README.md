@@ -7,6 +7,7 @@ MongoDB backend, wired together — not two separate builds anymore.
 sahayog-mern/
 ├── frontend/     React + Vite + Tailwind (Phase 1)
 ├── backend/      Express + MongoDB (Phase 2)
+├── admin/        React + Vite admin panel (content, donations, forms, settings)
 └── README.md     you are here
 ```
 
@@ -62,7 +63,7 @@ or content with no matching backend field yet (lat/lng isn't in the
 `SiteSetting` model). The file's top comment explains exactly what's still
 used and why.
 
-## Running both together
+## Running all three together
 
 ### 1. Backend first
 
@@ -75,7 +76,7 @@ npm run seed:content    # recommended — the frontend has nothing to show witho
 npm run dev              # http://localhost:5000
 ```
 
-### 2. Frontend
+### 2. Frontend (the public site)
 
 ```bash
 cd frontend
@@ -84,14 +85,28 @@ cp .env.example .env    # defaults already point at http://localhost:5000/api
 npm run dev              # http://localhost:5173
 ```
 
+### 3. Admin panel
+
+```bash
+cd admin
+npm install
+cp .env.example .env    # defaults already point at http://localhost:5000/api
+npm run dev              # http://localhost:5174
+```
+
+Log in with the admin account `npm run seed:admin` created in step 1. See
+`admin/README.md` for the two backend files that needed a small patch to
+support it (already applied in this copy — see the note there for details
+if you're merging into an older copy of the backend).
+
 ### Or, from this root folder
 
-A convenience root `package.json` is included so you can run both with one
-command once each side's own `npm install` is done:
+A convenience root `package.json` is included so you can run all three with
+one command once each side's own `npm install` is done:
 
 ```bash
 npm install              # installs `concurrently` at the root only
-npm run dev               # runs backend + frontend together
+npm run dev               # runs backend + frontend + admin together
 ```
 
 ## The one thing I couldn't actually test
