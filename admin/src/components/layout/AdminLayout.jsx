@@ -1,11 +1,39 @@
-import { Outlet, useMatches } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
+const TITLES = {
+  '/': 'Dashboard',
+  '/projects': 'Projects',
+  '/drives': 'Drives',
+  '/stories': 'Stories',
+  '/gallery': 'Gallery',
+  '/testimonials': 'Testimonials',
+  '/team': 'Team',
+  '/awards': 'Awards',
+  '/press': 'Press',
+  '/partners': 'Partners',
+  '/faqs': 'FAQs',
+  '/reports': 'Reports',
+  '/campaigns': 'Campaigns',
+  '/impact-stats': 'Impact Stats',
+  '/donations': 'Donations',
+  '/receipt-requests': '80G Requests',
+  '/contact-messages': 'Contact Messages',
+  '/volunteers': 'Volunteers',
+  '/internships': 'Internships',
+  '/csr-enquiries': 'CSR Enquiries',
+  '/sponsor-requests': 'Sponsor Requests',
+  '/newsletter': 'Newsletter',
+  '/admins': 'Admin Users',
+  '/settings': 'Site Settings',
+}
+
 export default function AdminLayout() {
-  const matches = useMatches()
-  const current = [...matches].reverse().find((m) => m.handle?.title)
-  const title = current?.handle?.title || 'Dashboard'
+  const { pathname } = useLocation()
+  const title =
+    TITLES[pathname] ||
+    (pathname.startsWith('/projects/') ? 'Project' : 'Admin')
 
   return (
     <div className="min-h-screen bg-paper">
